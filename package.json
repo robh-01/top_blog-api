@@ -1,0 +1,17 @@
+{
+  "name": "blog-api-project",
+  "version": "1.0.0",
+  "description": "for completion of the odin project",
+  "homepage": "https://github.com/robh-01/top_blog-api#readme",
+  "bugs": {
+    "url": "https://github.com/robh-01/top_blog-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robh-01/top_blog-api.git"
+  },
+  "license": "ISC",
+  "author": "robh",
+  "type": "module",
+  "scripts": {}
+}
