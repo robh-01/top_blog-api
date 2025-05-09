@@ -1,4 +1,6 @@
 import { createUser, getUserFromId } from "../db/userQueries.js";
+import { Prisma } from "../generated/prisma/client.js";
+
 
 export async function createUserHandler(req, res, next) {
   const { username, email, password } = req.body;
@@ -12,10 +14,22 @@ export async function createUserHandler(req, res, next) {
   } catch (err) {
     console.log("Error creating user: ", err.message);
 
-    res.status(500).json({
-      status: "error",
-      message: "Failed to create user. Please try again later.",
-    });
+    if (
+      err instanceof Prisma.PrismaClientKnownRequestError &&
+      err.code === "P2002"
+    ) {
+      res.status(500).json({
+        status: "error",
+        message:
+          "Failed to create user. There is a unique constraint violation",
+        violatedField: err.meta.target,
+      });
+    } else {
+      res.status(500).json({
+        status: "error",
+        message: "Failed to create user. Please try again later.",
+      });
+    }
   }
 }
 
@@ -23,16 +37,17 @@ export async function getUserFromIdHandler(req, res, next) {
   const { userId } = req.params;
   try {
     const user = await getUserFromId(parseInt(userId));
-    if(!user) {
+    if (!user) {
       return res.status(404).json({
         status: "error",
         message: `User with ID ${userId} not found.`,
       });
     }
-    res.status(200).json({ 
+    res.status(200).json({
       status: "success",
       message: `User with ID ${userId} retrieved successfully`,
-      data: user });
+      data: user,
+    });
   } catch (err) {
     console.log("Error retrieving user: ", err.message);
     res.status(500).json({
