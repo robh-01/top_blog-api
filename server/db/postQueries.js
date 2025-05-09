@@ -42,4 +42,31 @@ async function editPost(postId, post) {
   return updatedPost;
 }
 
-export { createPost, getPosts, getPostById, editPost };
+// takes id of a post and toggle it's published values
+// the publishedAt date is the date when the post is first published
+// any unpublishes or published after the first published will not be updated
+async function togglePublished(postId) {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+    select: {
+      published: true,
+      publishedAt: true,
+    },
+  });
+
+  const toggledPublishedPost = await prisma.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      published: !post.published,
+      publishedAt: post.publishedAt ? post.publishedAt : new Date().toISOString(),
+    },
+  });
+
+  return toggledPublishedPost;
+}
+
+export { createPost, getPosts, getPostById, editPost, togglePublished };
