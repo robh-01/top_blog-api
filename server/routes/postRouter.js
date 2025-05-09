@@ -12,5 +12,6 @@ postRouter.patch(
   "/:postId/publish",
   postController.togglePublishedHandler
 );
+postRouter.delete("/:postId", postController.deletePostHandler);
 
 export { postRouter };

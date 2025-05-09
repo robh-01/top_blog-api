@@ -72,10 +72,27 @@ async function togglePublished(postId) {
 }
 
 async function deletePostById(postId) {
-  const deletedPost = await prisma.post.delete({
-    where: {
-      id: postId,
-    },
+  // const deletedPost = await prisma.post.delete({
+  //   where: {
+  //     id: postId,
+  //   },
+  // });
+  const deletedPost = await prisma.$transaction(async (prisma) => {
+    // Delete comments related to the post
+    await prisma.comment.deleteMany({
+      where: {
+        postId: postId,
+      },
+    });
+
+    // Delete the post itself
+    const post = await prisma.post.delete({
+      where: {
+        id: postId,
+      },
+    });
+
+    return post;
   });
 
   return deletedPost;

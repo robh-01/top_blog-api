@@ -110,3 +110,21 @@ export async function togglePublishedHandler(req, res, next) {
     });
   }
 }
+
+export async function deletePostHandler(req, res, next) {
+  const { postId } = req.params;
+
+  try {
+    await deletePostById(parseInt(postId));
+    res.status(200).json({
+      status: "success",
+      message: `Post with ID ${postId} deleted successfully.`,
+    });
+  } catch (err) {
+    console.log("Error deleting post: ", err.message);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to delete the post. Please try again later.",
+    });
+  }
+}
