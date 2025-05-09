@@ -8,5 +8,9 @@ postRouter.post("", postController.createPostHandler);
 postRouter.get("", postController.getPostsHandler);
 postRouter.get("/:postId", postController.getPostByIdHandler);
 postRouter.put("/:postId", postController.editPostHandler);
+postRouter.patch(
+  "/:postId/publish",
+  postController.togglePublishedHandler
+);
 
 export { postRouter };

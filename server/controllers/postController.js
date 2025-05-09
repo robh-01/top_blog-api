@@ -89,3 +89,24 @@ export async function editPostHandler(req, res, next) {
     });
   }
 }
+
+export async function togglePublishedHandler(req, res, next) {
+  const { postId } = req.params;
+
+  try {
+    const toggledPost = await togglePublished(parseInt(postId));
+    res.status(200).json({
+      status: "success",
+      message: `Post with ID ${postId} published status toggled successfully.`,
+      data: {
+        toggledPost,
+      },
+    });
+  } catch (err) {
+    console.log("Error toggling published status: ", err.message);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to toggle published status. Please try again later.",
+    });
+  }
+}
