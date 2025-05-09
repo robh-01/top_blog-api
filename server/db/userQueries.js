@@ -21,4 +21,4 @@ async function getUserById(userId) {
   return user;
 }
 
-export { createUser, getUserFromId };
+export { createUser, getUserById };

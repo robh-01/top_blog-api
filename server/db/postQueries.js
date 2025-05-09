@@ -9,4 +9,10 @@ async function createPost(post) {
   return createdPost;
 }
 
-export { createPost };
+//return all posts
+async function getPosts() {
+  const posts = await prisma.post.findMany();
+  return posts;
+}
+
+export { createPost, getPosts };
