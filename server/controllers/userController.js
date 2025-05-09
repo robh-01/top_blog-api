@@ -1,4 +1,4 @@
-import { createUser, getUserFromId } from "../db/userQueries.js";
+import { createUser, getUserById } from "../db/userQueries.js";
 import { Prisma } from "../generated/prisma/client.js";
 
 
@@ -36,7 +36,7 @@ export async function createUserHandler(req, res, next) {
 export async function getUserFromIdHandler(req, res, next) {
   const { userId } = req.params;
   try {
-    const user = await getUserFromId(parseInt(userId));
+    const user = await getUserById(parseInt(userId));
     if (!user) {
       return res.status(404).json({
         status: "error",

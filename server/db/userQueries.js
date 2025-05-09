@@ -9,7 +9,7 @@ async function createUser(user) {
   return createdUser;
 }
 
-async function getUserFromId(userId) {
+async function getUserById(userId) {
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
