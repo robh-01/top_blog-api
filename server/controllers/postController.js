@@ -1,4 +1,11 @@
-import { createPost, getPosts } from "../db/postQueries.js";
+import {
+  createPost,
+  getPosts,
+  getPostById,
+  editPost,
+  togglePublished,
+  deletePostById,
+} from "../db/postQueries.js";
 
 export async function createPostHandler(req, res, next) {
   // Temporary middleware before routes
@@ -37,6 +44,48 @@ export async function getPostsHandler(req, res, next) {
     res.status(500).json({
       status: "error",
       message: "Failed to fetch all the posts of the author.",
+    });
+  }
+}
+
+export async function getPostByIdHandler(req, res, next) {
+  const { postId } = req.params;
+  try {
+    const post = await getPostById(parseInt(postId));
+    res.status(200).json({
+      status: "success",
+      message: `Post "${post.title}" fetched successfully.`,
+      data: {
+        post,
+      },
+    });
+  } catch (err) {
+    console.log("Error fetching posts: ", err.message);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to fetch the post",
+    });
+  }
+}
+
+export async function editPostHandler(req, res, next) {
+  const { postId } = req.params;
+  const postUpdates = req.body;
+
+  try {
+    const updatedPost = await editPost(parseInt(postId), postUpdates);
+    res.status(200).json({
+      status: "success",
+      message: `Post with ID ${postId} updated successfully.`,
+      data: {
+        updatedPost,
+      },
+    });
+  } catch (err) {
+    console.log("Error updating post: ", err.message);
+    res.status(500).json({
+      status: "error",
+      message: "Failed to update the post. Please try again later.",
     });
   }
 }
