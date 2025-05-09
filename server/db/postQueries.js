@@ -62,11 +62,30 @@ async function togglePublished(postId) {
     },
     data: {
       published: !post.published,
-      publishedAt: post.publishedAt ? post.publishedAt : new Date().toISOString(),
+      publishedAt: post.publishedAt
+        ? post.publishedAt
+        : new Date().toISOString(),
     },
   });
 
   return toggledPublishedPost;
 }
 
-export { createPost, getPosts, getPostById, editPost, togglePublished };
+async function deletePostById(postId) {
+  const deletedPost = await prisma.post.delete({
+    where: {
+      id: postId,
+    },
+  });
+
+  return deletedPost;
+}
+
+export {
+  createPost,
+  getPosts,
+  getPostById,
+  editPost,
+  togglePublished,
+  deletePostById,
+};
