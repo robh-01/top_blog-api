@@ -1,7 +1,6 @@
 import { createUser, getUserById } from "../db/userQueries.js";
 import { Prisma } from "../generated/prisma/client.js";
 
-
 export async function createUserHandler(req, res, next) {
   const { username, email, password } = req.body;
   const user = { username, email, password };
@@ -46,7 +45,9 @@ export async function getUserFromIdHandler(req, res, next) {
     res.status(200).json({
       status: "success",
       message: `User with ID ${userId} retrieved successfully`,
-      data: user,
+      data: {
+        user,
+      },
     });
   } catch (err) {
     console.log("Error retrieving user: ", err.message);
