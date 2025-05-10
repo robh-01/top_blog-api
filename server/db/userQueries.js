@@ -21,4 +21,13 @@ async function getUserById(userId) {
   return user;
 }
 
-export { createUser, getUserById };
+async function getUserByEmail(email) {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+  return user;
+}
+
+export { createUser, getUserById, getUserByEmail };

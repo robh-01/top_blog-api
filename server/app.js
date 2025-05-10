@@ -4,11 +4,15 @@ const app = express();
 import dotenv from "dotenv";
 dotenv.config();
 
-import { indexRouter } from "./routes/index.js";
+//configs
+import { configPassport } from "./configs/passport.config.js";
 
+import { indexRouter } from "./routes/index.js";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+configPassport();
 
 // index router
 app.use("", indexRouter);

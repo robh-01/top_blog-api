@@ -1,6 +1,8 @@
 import { createUser, getUserById } from "../db/userQueries.js";
 import { Prisma } from "../generated/prisma/client.js";
-import bcrypt, { hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
+import { getUserByEmail } from "../db/userQueries.js";
+import jwt from "jsonwebtoken";
 
 export async function createUserHandler(req, res, next) {
   const { username, email, password } = req.body;
@@ -31,6 +33,48 @@ export async function createUserHandler(req, res, next) {
         message: "Failed to create user. Please try again later.",
       });
     }
+  }
+}
+
+export async function loginUserHandler(req, res, next) {
+  const { email, password } = req.body;
+  try {
+    const user = await getUserByEmail(email);
+    if (!user) {
+      return res.status(401).json({
+        status: "failure",
+        message: "Invalid credentials.",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        status: "failure",
+        message: "Invalid credentials.",
+      });
+    }
+
+    const payload = {
+      sub: user.id,
+    };
+    const opts = {
+      expiresIn: "1h",
+      algorithm: "HS256",
+    };
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, opts);
+    res.status(200).json({
+      status: "success",
+      message: `User ${user.username} logged in successfully`,
+      token,
+    });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({
+      status: "failure",
+      message: "Unable to login at the moment. Please try again later",
+    });
   }
 }
 
