@@ -15,10 +15,29 @@ postRouter.post(
   authorizeAdmin,
   postController.createPostHandler
 );
-postRouter.get("", postController.getPostsHandler);
-postRouter.get("/:postId", postController.getPostByIdHandler);
-postRouter.put("/:postId", postController.editPostHandler);
-postRouter.patch("/:postId/publish", postController.togglePublishedHandler);
-postRouter.delete("/:postId", postController.deletePostHandler);
+
+postRouter.get("", authenticateJWT, postController.getPostsHandler);
+postRouter.get("/:postId", authenticateJWT, postController.getPostByIdHandler);
+
+postRouter.put(
+  "/:postId",
+  authenticateJWT,
+  authorizeAdmin,
+  postController.editPostHandler
+);
+
+postRouter.patch(
+  "/:postId/publish",
+  authenticateJWT,
+  authorizeAdmin,
+  postController.togglePublishedHandler
+);
+
+postRouter.delete(
+  "/:postId",
+  authenticateJWT,
+  authorizeAdmin,
+  postController.deletePostHandler
+);
 
 export { postRouter };
