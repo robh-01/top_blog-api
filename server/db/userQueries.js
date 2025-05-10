@@ -30,4 +30,40 @@ async function getUserByEmail(email) {
   return user;
 }
 
-export { createUser, getUserById, getUserByEmail };
+async function getUserByCommentId(commentId) {
+  const comment = await prisma.comment.findUnique({
+    where: {
+      id: commentId,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+
+  return comment.user;
+}
+
+async function getAuthor() {
+  const authors = await prisma.user.findMany({
+    where: {
+      isAuthor: true,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return authors[0];
+}
+
+export {
+  createUser,
+  getUserById,
+  getUserByEmail,
+  getUserByCommentId,
+  getAuthor,
+};

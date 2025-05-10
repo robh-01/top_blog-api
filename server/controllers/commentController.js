@@ -8,9 +8,8 @@ import {
 export async function addCommentHandler(req, res, next) {
   const { postId } = req.params;
   // get userId from the logged in user
-  // const userId = req.user.id;
-  // for now, we will use a hardcoded userId
-  const userId = 1;
+  const userId = req.user.id;
+
   const { content } = req.body;
 
   try {

@@ -3,9 +3,33 @@ const commentRouter = Router();
 
 import * as commentController from "../controllers/commentController.js";
 
-commentRouter.post("/:postId", commentController.addCommentHandler);
-commentRouter.get("/:commentId", commentController.getCommentByIdHandler);
-commentRouter.put("/:commentId", commentController.editCommentHandler);
-commentRouter.delete("/:commentId", commentController.deleteCommentHandler);
+import {
+  authenticateJWT,
+  authorizeCommentOwner,
+  authorizeCommentOwnerOrAuthor,
+} from "../middleware/authMiddleware.js";
+
+commentRouter.post(
+  "/:postId",
+  authenticateJWT,
+  commentController.addCommentHandler
+);
+commentRouter.get(
+  "/:commentId",
+  authenticateJWT,
+  commentController.getCommentByIdHandler
+);
+commentRouter.put(
+  "/:commentId",
+  authenticateJWT,
+  authorizeCommentOwner,
+  commentController.editCommentHandler
+);
+commentRouter.delete(
+  "/:commentId",
+  authenticateJWT,
+  authorizeCommentOwnerOrAuthor,
+  commentController.deleteCommentHandler
+);
 
 export { commentRouter };

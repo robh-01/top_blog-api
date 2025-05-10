@@ -46,4 +46,9 @@ async function deleteComment(commentId) {
   return deletedComment;
 }
 
-export { addComment, getCommentById, editComment, deleteComment };
+export {
+  addComment,
+  getCommentById,
+  editComment,
+  deleteComment,
+};
