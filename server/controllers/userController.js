@@ -1,9 +1,11 @@
 import { createUser, getUserById } from "../db/userQueries.js";
 import { Prisma } from "../generated/prisma/client.js";
+import bcrypt, { hash } from "bcryptjs";
 
 export async function createUserHandler(req, res, next) {
   const { username, email, password } = req.body;
-  const user = { username, email, password };
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = { username, email, password: hashedPassword };
   try {
     await createUser(user);
     res.status(201).json({
