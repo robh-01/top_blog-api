@@ -2,3 +2,6 @@
 **/node_modules
 
 **/.env
+
+# a file where I test methods/functions/functionality while creating the project
+testing.js
