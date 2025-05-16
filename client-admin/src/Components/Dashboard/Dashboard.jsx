@@ -1,15 +1,14 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./App.css";
-import LoginPage from "./Components/LoginPage/LoginPage.jsx";
 
-function App() {
+export default function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
-    if (token) {
+    if (!token) {
+      navigate("/");
+    } else {
       //for canceling the fetch request in the cleanup function
       const controller = new AbortController();
       const signal = controller.signal;
@@ -24,8 +23,8 @@ function App() {
         },
       })
         .then((response) => {
-          if (response.ok) {
-            navigate("/dashboard"); // Redirect to dashboard if token is valid
+          if (!response.ok) {
+            navigate("/"); // Redirect to dashboard if token is valid
           }
         })
         .catch((err) => {
@@ -38,12 +37,5 @@ function App() {
       };
     }
   }, [navigate]);
-
-  return (
-    <>
-      <LoginPage />
-    </>
-  );
+  return <>dashboard component.</>;
 }
-
-export default App;
