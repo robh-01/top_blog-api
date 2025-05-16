@@ -1,5 +1,8 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+
+import { DashboardBar } from "../DashboardBar/DashboardBar";
+import { DashboardNav } from "../DashboardNav/DashboardNav";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -37,5 +40,13 @@ export default function Dashboard() {
       };
     }
   }, [navigate]);
-  return <>dashboard component.</>;
+  return (
+    <>
+      <DashboardBar />
+      <div className="dashboard-lower-container">
+        <DashboardNav />
+        <Outlet />
+      </div>
+    </>
+  );
 }
