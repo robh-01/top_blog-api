@@ -15,7 +15,7 @@ import { BlogTile } from "../BlogTile/BlogTile";
 // };
 
 export function BlogLister() {
-  const { loading, error, blogs } = useContext(DashboardContext);
+  const { loading, error, blogs, setBlogs } = useContext(DashboardContext);
 
   return (
     <>
@@ -24,7 +24,14 @@ export function BlogLister() {
           ? "Loading....."
           : error
           ? `${error}`
-          : blogs.map((blog) => <BlogTile blog={blog} key={blog.id} />)}
+          : blogs.map((blog) => (
+              <BlogTile
+                blog={blog}
+                key={blog.id}
+                setBlogs={setBlogs}
+                blogs={blogs}
+              />
+            ))}
       </div>
     </>
   );

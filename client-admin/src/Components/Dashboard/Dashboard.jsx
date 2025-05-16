@@ -89,7 +89,9 @@ export default function Dashboard() {
         <div className={styles["dashboard-lower-container"]}>
           <DashboardNav />
           <div className={styles["dashboard-container--main"]}>
-            <DashboardContext.Provider value={{ blogs, error, loading }}>
+            <DashboardContext.Provider
+              value={{ blogs, setBlogs, error, loading }}
+            >
               <Outlet />
             </DashboardContext.Provider>
           </div>
