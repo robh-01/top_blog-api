@@ -1,0 +1,15 @@
+.dashboard-nav {
+  background-color: white;
+  width: 5%;
+  border: 1px solid black;
+}
+
+.dashboard-nav--list {
+  list-style: none;
+  padding: 0;
+  padding-top: 1.5rem;
+  display: flex;
+  gap: 1em;
+  flex-direction: column;
+  align-items: center;
+}

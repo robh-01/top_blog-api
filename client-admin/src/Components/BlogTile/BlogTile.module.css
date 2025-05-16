@@ -1,0 +1,27 @@
+.blog-tile {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.192);
+  padding: 0.4rem 1.5rem;
+}
+
+.blog-tile--data--title {
+  font-size: 1.4rem;
+}
+
+.blog-tile--data--lower-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.blog-tile--data--lower {
+  font-size: 1rem;
+  color: rgb(58, 56, 56);
+}
+
+.blog-tile--options {
+  display: flex;
+  gap: 1rem;
+}

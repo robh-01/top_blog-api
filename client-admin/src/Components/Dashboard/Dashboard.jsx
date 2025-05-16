@@ -4,6 +4,8 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { DashboardBar } from "../DashboardBar/DashboardBar";
 import { DashboardNav } from "../DashboardNav/DashboardNav";
 
+import styles from "./Dashboard.module.css";
+
 export default function Dashboard() {
   const navigate = useNavigate();
 
@@ -42,10 +44,14 @@ export default function Dashboard() {
   }, [navigate]);
   return (
     <>
-      <DashboardBar />
-      <div className="dashboard-lower-container">
-        <DashboardNav />
-        <Outlet />
+      <div className={styles["dashboard"]}>
+        <DashboardBar />
+        <div className={styles["dashboard-lower-container"]}>
+          <DashboardNav />
+          <div className={styles["dashboard-container--main"]}>
+            <Outlet />
+          </div>
+        </div>
       </div>
     </>
   );
