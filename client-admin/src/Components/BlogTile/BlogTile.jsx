@@ -24,6 +24,26 @@ export function BlogTile({ blog, blogs, setBlogs }) {
         setBlogs(newBlogs);
       });
   }
+  function handleDelete() {
+    authFetch(`http://localhost:3000/post/${blog.id}`, {
+      method: "DELETE",
+      mode: "cors",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Unable to delete the blog.");
+        }
+      })
+      .then(() => {
+        let newBlogs = blogs.filter((b) => {
+          if (b.id == blog.id) return false;
+          return true;
+        });
+        setBlogs(newBlogs);
+      });
+  }
 
   return (
     <>
@@ -45,7 +65,12 @@ export function BlogTile({ blog, blogs, setBlogs }) {
             {blog.published ? "Unpublish" : "Publish"}
           </button>
           <button className={styles["blog-tile--options-btn"]}>Edit</button>
-          <button className={styles["blog-tile--options-btn"]}>Delete</button>
+          <button
+            className={styles["blog-tile--options-btn"]}
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
         </div>
       </div>
     </>
