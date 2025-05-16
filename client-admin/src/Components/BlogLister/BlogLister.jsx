@@ -17,21 +17,60 @@ import { BlogTile } from "../BlogTile/BlogTile";
 export function BlogLister() {
   const { loading, error, blogs, setBlogs } = useContext(DashboardContext);
 
+  const publishedBlogs = [];
+  const unpublishedBlogs = [];
+  if (blogs) {
+    blogs.forEach((blog) => {
+      if (blog.published) publishedBlogs.push(blog);
+      else {
+        unpublishedBlogs.push(blog);
+      }
+    });
+  }
+
   return (
     <>
       <div className={styles["blog-lister"]}>
-        {loading
-          ? "Loading....."
-          : error
-          ? `${error}`
-          : blogs.map((blog) => (
-              <BlogTile
-                blog={blog}
-                key={blog.id}
-                setBlogs={setBlogs}
-                blogs={blogs}
-              />
-            ))}
+        {loading ? (
+          "Loading....."
+        ) : error ? (
+          `${error}`
+        ) : (
+          <>
+            {blogs.length > 0 ? (
+              <>
+                {unpublishedBlogs.length > 0 ? (
+                  <>
+                    <p className={styles["blog-lister--title"]}>Unpublished</p>{" "}
+                    {unpublishedBlogs.map((blog) => (
+                      <BlogTile
+                        blog={blog}
+                        key={blog.id}
+                        setBlogs={setBlogs}
+                        blogs={blogs}
+                      />
+                    ))}
+                  </>
+                ) : null}
+                {publishedBlogs.length > 0 ? (
+                  <>
+                    <p className={styles["blog-lister--title"]}>Published</p>{" "}
+                    {publishedBlogs.map((blog) => (
+                      <BlogTile
+                        blog={blog}
+                        key={blog.id}
+                        setBlogs={setBlogs}
+                        blogs={blogs}
+                      />
+                    ))}
+                  </>
+                ) : null}
+              </>
+            ) : (
+              "No blogs written yet."
+            )}
+          </>
+        )}
       </div>
     </>
   );
