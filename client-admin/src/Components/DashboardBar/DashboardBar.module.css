@@ -1,0 +1,40 @@
+.dashboard-bar {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid black;
+}
+
+.dashboard-bar--logo {
+  font-size: 1.3rem;
+  width: 5%;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.dashboard-bar--right-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  padding-inline: 5rem 3rem;
+  border: 1px solid black;
+}
+
+.dashboard-bar--title {
+  font-size: 1rem;
+  border: 1px solid black;
+}
+
+.dashboard-bar--btn {
+  background-color: rgb(24, 141, 219);
+  padding: 0.2em 1em;
+  border-radius: 16px;
+  border: none;
+  border: 1px solid black;
+}
+
+.dashboard-bar--btn:hover {
+  background-color: rgb(7, 91, 146);
+  color: white;
+}
