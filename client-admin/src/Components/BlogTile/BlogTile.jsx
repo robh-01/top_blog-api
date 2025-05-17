@@ -1,5 +1,6 @@
 import styles from "./BlogTile.module.css";
 import { authFetch } from "../../utils/authFetch";
+import { Pencil, Trash, BookCheck, BookDashed } from "lucide-react";
 
 export function BlogTile({ blog, blogs, setBlogs }) {
   function handlePublishToggle() {
@@ -62,14 +63,24 @@ export function BlogTile({ blog, blogs, setBlogs }) {
             className={styles["blog-tile--options-btn"]}
             onClick={handlePublishToggle}
           >
-            {blog.published ? "Unpublish" : "Publish"}
+            {blog.published ? (
+              <>
+                Unpublish <BookDashed />
+              </>
+            ) : (
+              <>
+                Publish <BookCheck />
+              </>
+            )}
           </button>
-          <button className={styles["blog-tile--options-btn"]}>Edit</button>
+          <button className={styles["blog-tile--options-btn"]}>
+            Edit <Pencil size={20} />
+          </button>
           <button
             className={styles["blog-tile--options-btn"]}
             onClick={handleDelete}
           >
-            Delete
+            Delete <Trash size={20} />
           </button>
         </div>
       </div>

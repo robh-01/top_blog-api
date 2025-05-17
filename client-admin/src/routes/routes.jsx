@@ -21,7 +21,7 @@ const routes = [
       {
         // later see here if the blog to edit should be fetched from the db or the edit btn on
         // blogs on blog lister will give it.
-        path: "edit",
+        path: "new",
         element: <BlogEditor />,
       },
     ],
